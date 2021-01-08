@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>financial info</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+<div id="app-5">
+  <input placeholder="stock searchbar" v-model="message">
+  <p>Stock Ticker: {{message}}</p>
+  <p v-if="results">{{results}}</p>
+
+</div>
+
+
+  <script>
+
+var token = 'bvp6asv48v6s8216uv40'
+
+var app5 = new Vue({
+  el: '#app-5',
+  data: {
+    message: '',
+    results: ''
+  },
+  watch: {
+    message: function(message) {$.ajax({
+      	type: 'GET',
+      	dataType: 'json',
+      	url: 'https://finnhub.io/api/v1/search?q=' + message + '&token=' + token, 
+      	success: function(results2) {
+      		console.log(results2);
+      		app5.results = results2;
+      	},
+      	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+        console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
+    	}})
+    } 	
+  }
+})
+
+  </script>
+</body>
+</html>
