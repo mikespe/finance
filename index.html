@@ -9,8 +9,9 @@
 
 
 <div id="app-5">
-  <input placeholder="stock searchbar" v-model="message">
-  <p>Stock Ticker: {{message}}</p>
+  <input placeholder="stock searchbar" v-model="input">
+	  <button v-on:click="message(input)">Submit</button>
+  <p>Stock Ticker: {{input}}</p>
   <p v-if="results">{{results}} </p>
 
 </div>
@@ -21,14 +22,14 @@ var token = 'bvp6asv48v6s8216uv40'
 var app5 = new Vue({
   el: '#app-5',
   data: {
-    message: '',
-    results: ''
+    results: '',
+    input: ''
   },
-  watch: {
-    message: function(message) {$.ajax({
+  methods: {
+    message: function(input) {$.ajax({
       	type: 'GET',
       	dataType: 'json',
-      	url: 'https://finnhub.io/api/v1/search?q=' + message + '&token=' + token, 
+      	url: 'https://finnhub.io/api/v1/quote?symbol=' + input + '&token=' + token, 
       	success: function(results2) {
       		console.log(results2);
       		app5.results = results2;
